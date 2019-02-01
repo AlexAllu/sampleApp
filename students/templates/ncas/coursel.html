@@ -1,7 +1,0 @@
-<h1>STUDENTS DETAILS</h1>
-{% if stdlist %}
-    <ul>
-    {% for std in stdlist %}
-        <li><a href="{% url 'details' std.pk %}"></a></li>
-    {% endfor %}
-    </ul>

@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import Student, Course
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
 
 
-class StdView(generic.ListView):
+class StdView(LoginRequiredMixin, generic.ListView):
     template_name = 'ncas/detailsl.html'
     context_object_name = 'std'
 
