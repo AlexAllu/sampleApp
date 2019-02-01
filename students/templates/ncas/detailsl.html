@@ -1,0 +1,8 @@
+<h1>STUDENTS DETAILS</h1>
+{% if std %}
+    <ul>
+    {% for st in std %}
+        <li><a href="{% url 'stdd' st.pk %}">{{st.name}}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
