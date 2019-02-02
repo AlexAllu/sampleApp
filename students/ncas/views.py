@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Student, Course
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 class StdView(LoginRequiredMixin, generic.ListView):
@@ -30,3 +32,11 @@ class CoursView(generic.ListView):
 class CoursDView(generic.DetailView):
     model = Course
     template_name = 'ncas/course.html'
+
+
+class SignUp(SuccessMessageMixin, generic.CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('ncas:std')
+    success_message = 'SIGN UP SUCCESSFULL'

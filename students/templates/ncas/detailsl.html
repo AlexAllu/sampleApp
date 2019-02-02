@@ -4,7 +4,7 @@
 {% if std %}
     <ul>
     {% for st in std %}
-        <li><a href="{% url 'stdd' st.pk %}">{{st.name}}</a></li>
+        <li><a href="{% url 'ncas:stdd' st.pk %}">{{st.name}}</a></li>
     {% endfor %}
     </ul>
 {% endif %}

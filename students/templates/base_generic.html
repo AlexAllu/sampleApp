@@ -15,7 +15,7 @@
       <a class="navbar-brand" href="#">NCAS</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="{% url 'ncas:std' %}">Home</a></li>
       <li><a href="#">COURSES</a></li>
       <li><a href="#">TIME TABLES</a></li>
         <li><a href="#">NOTIFICATIONS</a></li>
@@ -23,9 +23,9 @@
     <ul class="nav navbar-nav navbar-right">
       {%if user.is_authenticated %}
         <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user.username}}</a></li>
-       <li><a href="{% url 'logout'%}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+       <li><a href="{% url 'logout'%}?next={{request.path}}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         {% else %}
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="{% url 'ncas:signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><a href="{% url 'login'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             <!--<li><a href="{% url 'admin:index'%}"><span class="glyphicon glyphicon-user"></span>Admin LogIn</a></li>-->
         {%endif%}
