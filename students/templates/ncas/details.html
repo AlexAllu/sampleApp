@@ -1,1 +1,11 @@
-<h1>{{student.name}}</h1>
+{% extends "base_generic.html" %}
+{% block content %}
+<h1>{{detd.name}}</h1>
+<table>
+    <tr><td>REGNO</td>
+        <td>{{detd.reg_no}}</td></tr>
+    <tr><td>ADMNO</td><td>{{detd.adm_no}}</td></td>
+   <tr><td> ADDRESS</td><td>{{detd.adrs}}</td></tr>
+    <tr><td> COURSE</td><td>{{detd.course}}</td></tr>
+    </table>
+{% endblock %}

@@ -19,9 +19,10 @@ class StdView(LoginRequiredMixin, generic.ListView):
 class StdDView(generic.DetailView):
     model = Student
     template_name = 'ncas/details.html'
+    context_object_name = 'detd'
 
 
-class CoursView(generic.ListView):
+class CoursView(LoginRequiredMixin,generic.ListView):
     template_name = 'ncas/coursel.html'
     context_object_name = 'courslist'
 

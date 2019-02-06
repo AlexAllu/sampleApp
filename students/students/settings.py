@@ -115,4 +115,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/ncas/Students/'
-# LOGOUT_REDIRECT_URL = '/ncas/Students/'
+LOGOUT_REDIRECT_URL = '/ncas/Students/'
