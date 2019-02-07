@@ -13,3 +13,8 @@ class UserCreationForm(UserCreationForm):
             'password1': '',
             'password2': '',
         }
+
+
+
+class AdmnoVerification(forms.Form):
+    adm_no = forms.IntegerField(required=True)

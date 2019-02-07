@@ -1,6 +1,5 @@
 {% extends "base_generic.html" %}
 {% block content %}
-<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -65,11 +64,14 @@ span.psw {
 }
 </style>
 <div class="container">
-<h1>SIGN UP</h1>
-<form method="post">
+{% if valid %}
+    <h5>YOU ARE NOT A STUDENT </h5>
+{% endif %}
+<h4>ENTER YOUR ADMISSION NUMBER TO VERIFY WHETHER  YOU ARE A STUDENT OF NCAS OR NOT</h4>
+<form method="post" action="{% url 'ncas:admno' %}">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">SIGNUP</button>
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
 </form>
 </div>
 {% endblock %}
