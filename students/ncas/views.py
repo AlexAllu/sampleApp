@@ -1,10 +1,11 @@
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import RequestContext
 from django.views import generic
 from django.views.generic import FormView
 
-from .models import Student, Course
+from .models import Student, Course, Subject, Semester
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -40,19 +41,27 @@ class CoursDView(generic.DetailView):
     template_name = 'ncas/course.html'
 
 
-class SignUp(SuccessMessageMixin, generic.CreateView):
-    model = User
-    form_class = UserCreationForm
-    template_name = 'registration/signup.html'
-    success_message = 'SIGN UP SUCCESSFULL'
-    success_url = reverse_lazy('login')
+def signUp(request):
+    if request.method == "POST":
+        sign = UserCreationForm(request.POST)
+        if sign.is_valid():
+            sign.save()
+            u = sign.cleaned_data.get('username')
+            p = sign.cleaned_data.get('password1')
+            user = authenticate(username=u, password=p)
+            login(request, user)
+            return redirect('ncas:std')
+        else:
+            return render(request, 'registration/signup.html', {'form': sign})
+    else:
+        sign = UserCreationForm()
+        return render(request, 'registration/signup.html', {'form': sign})
 
 
-
-class Admno(FormView):
+'''class Admno(FormView):
     template_name = 'registration/admno.html'
     success_url = reverse_lazy('ncas:signup')
-    form_class = AdmnoVerification
+    form_class = AdmnoVerification'''
 
 
 def admnoverification(request):
@@ -60,15 +69,30 @@ def admnoverification(request):
         admno = AdmnoVerification(request.POST)
         adlist = Student.objects.all().values_list('adm_no', flat=True)
         if admno.is_valid():
-            a = admno.cleaned_data['adm_no']
+            a = admno.cleaned_data.get('adm_no')
             if a in adlist:
                 form = UserCreationForm()
                 return render(request, 'registration/signup.html', {'form': form})
             else:
-                return render(request, 'registration/admno.html', {'form': admno, 'valid': True})
+                return render(request, 'registration/admno.html', {'form': admno})
         else:
             return render(request, 'registration/admno.html', {'form': admno})
     else:
-        f=AdmnoVerification()
-        # return HttpResponse('NOT A POST METHOD')
+        f = AdmnoVerification()
         return render(request, 'registration/admno.html', {'form': f})
+
+
+class SemView(generic.ListView):
+    template_name = 'ncas/sem.html'
+    context_object_name = 'semv'
+
+    def get_queryset(self):
+        return SemView.objects.all()
+
+
+class SemDLView(generic.ListView):
+    template_name = 'ncas/semd.html'
+    context_object_name = 'semd'
+
+    def get_queryset(self):
+        return SemDLView.objects.all()

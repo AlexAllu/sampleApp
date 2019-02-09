@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 
 from . import views
@@ -9,7 +9,8 @@ urlpatterns = [
     path('Course/', views.CoursView.as_view(), name='course'),
     path('<int:pk>/', views.CoursDView.as_view(), name='coursed'),
     path('Students/<int:pk>/', views.StdDView.as_view(), name='stdd'),
-    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('signup/', views.signUp, name='signup'),
     path('admno/', views.admnoverification, name='admno'),
-    path('admv/', views.Admno.as_view(), name='admv'),
+    path('semview/', views.SemView.as_view(), name='semv'),
+    path('semd/', views.SemDLView.as_view(), name='semd'),
 ]

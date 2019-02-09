@@ -66,7 +66,7 @@ span.psw {
 </style>
 <div class="container">
 <h1>SIGN UP</h1>
-<form method="post">
+<form method="post" >
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit">SIGNUP</button>

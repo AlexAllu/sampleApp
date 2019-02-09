@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+{% block content %}
+{% if semd %}
+    <ul>
+    {% for sd in semd %}
+        <li><a href="{% url 'ncas:std' sd.pk %}">{{sd.s_name}}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
