@@ -1,11 +1,9 @@
 {% extends "base_generic.html" %}
 {% block content %}
 <h1>{{detd.name}}</h1>
-<table>
-    <tr><td>REGNO</td>
-        <td>{{detd.reg_no}}</td></tr>
-    <tr><td>ADMNO</td><td>{{detd.adm_no}}</td></td>
-   <tr><td> ADDRESS</td><td>{{detd.adrs}}</td></tr>
-    <tr><td> COURSE</td><td>{{detd.course}}</td></tr>
-    </table>
+<p>{{ detd.reg_no }}</p>
+<p>{{ detd.adm_no }}</p>
+<p>{{ detd.sem }}</p>
+<p>{{ detd.course }}</p>
+{% for sub in detd.course.subject_set.all
 {% endblock %}
