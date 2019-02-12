@@ -1,9 +1,0 @@
-{% extends "base_generic.html" %}
-{% block content %}
-<h1>{{detd.name}}</h1>
-<p>{{ detd.reg_no }}</p>
-<p>{{ detd.adm_no }}</p>
-<p>{{ detd.sem }}</p>
-<p>{{ detd.course }}</p>
-{% for sub in detd.course.subject_set.all
-{% endblock %}

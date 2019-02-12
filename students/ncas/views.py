@@ -14,18 +14,25 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .forms import AdmnoVerification
 
 
-class StdDView(generic.DetailView):
+class StudentDetail(generic.DetailView):
     model = Student
-    template_name = 'ncas/details.html'
-    context_object_name = 'detd'
+    template_name = 'ncas/studentdetails.html'
+    context_object_name = 'student'
 
 
-class CoursView(LoginRequiredMixin, generic.ListView):
-    template_name = 'ncas/coursel.html'
-    context_object_name = 'courslist'
+class CourseList(generic.ListView):
+    model = Course
+    template_name = 'ncas/courselist.html'
+    context_object_name = 'course'
 
     def get_queryset(self):
         return Course.objects.all()
+
+
+class CourseDetail(generic.DetailView):
+    model = Course
+    template_name = 'ncas/coursedetails.html'
+    context_object_name = 'coursedetail'
 
 
 def signUp(request):
@@ -67,4 +74,3 @@ def admnoverification(request):
     else:
         f = AdmnoVerification()
         return render(request, 'registration/admno.html', {'form': f})
-
