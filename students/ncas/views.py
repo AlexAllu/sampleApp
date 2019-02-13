@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.views import generic
 from django.views.generic import FormView
 
-from .models import Student, Course, Subject, Semester
+from .models import Student, Course, Subject
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -14,31 +14,25 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .forms import AdmnoVerification
 
 
-class StdView(LoginRequiredMixin, generic.ListView):
-    template_name = 'ncas/detailsl.html'
-    context_object_name = 'std'
-
-    def get_queryset(self):
-        return Student.objects.all()
-
-
-class StdDView(generic.DetailView):
+class StudentDetail(generic.DetailView):
     model = Student
-    template_name = 'ncas/details.html'
-    context_object_name = 'detd'
+    template_name = 'ncas/studentdetails.html'
+    context_object_name = 'student'
 
 
-class CoursView(LoginRequiredMixin, generic.ListView):
-    template_name = 'ncas/coursel.html'
-    context_object_name = 'courslist'
+class CourseList(generic.ListView):
+    model = Course
+    template_name = 'ncas/courselist.html'
+    context_object_name = 'course'
 
     def get_queryset(self):
         return Course.objects.all()
 
 
-class CoursDView(generic.DetailView):
+class CourseDetail(generic.DetailView):
     model = Course
-    template_name = 'ncas/course.html'
+    template_name = 'ncas/coursedetails.html'
+    context_object_name = 'coursedetail'
 
 
 def signUp(request):
@@ -80,19 +74,3 @@ def admnoverification(request):
     else:
         f = AdmnoVerification()
         return render(request, 'registration/admno.html', {'form': f})
-
-
-class SemView(generic.ListView):
-    template_name = 'ncas/sem.html'
-    context_object_name = 'semv'
-
-    def get_queryset(self):
-        return SemView.objects.all()
-
-
-class SemDLView(generic.ListView):
-    template_name = 'ncas/semd.html'
-    context_object_name = 'semd'
-
-    def get_queryset(self):
-        return SemDLView.objects.all()

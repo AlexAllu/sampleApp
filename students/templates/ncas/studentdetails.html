@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends 'base_generic.html' %}
+{% block content %}
+<h3>{{ student.name }}</h3>
+<p>{{ student.adm_no }}</p>
+<p>{{ student.reg_no }}</p>
+<p>{{ student.course }}</p>
+
+<table class="table table-stripped">
+    {% for c in student.mark_set.all %}
+
+    <tr>
+        <td>
+            <p>{{ c.sub.id }}</p>
+        </td>
+        <td>
+            <p>{{ c.sub.name }}</p>
+        </td>
+        <td>
+            <p>{{ c.sub.sem }}</p>
+        </td>
+        <td>
+            <p>{{ c.s_mark1 }}</p>
+
+        </td>
+        <td>
+            <p>{{ c.s_mark2 }}</p>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
