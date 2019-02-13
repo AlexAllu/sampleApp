@@ -2,7 +2,7 @@
 {% extends 'base_generic.html' %}
 
 <ul>
-{% for c in course %}
+{% for c in clist %}
     <li><a href="{% url 'ncas:course' c.pk %}">{{ c.name }}</a></li>
     {% endfor %}
 

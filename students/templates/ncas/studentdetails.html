@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 {% extends 'base_generic.html' %}
 {% block content %}
-<h3>{{ student.name }}</h3>
-<p>{{ student.adm_no }}</p>
-<p>{{ student.reg_no }}</p>
-<p>{{ student.course }}</p>
+<h3>{{ studentd.name }}</h3>
+<p>{{ studentd.adm_no }}</p>
+<p>{{ studentd.reg_no }}</p>
+<p>{{ studentd.course }}</p>
 
 <table class="table table-stripped">
-    {% for c in student.mark_set.all %}
+    {% for c in studentd.mark_set.all %}
 
     <tr>
         <td>

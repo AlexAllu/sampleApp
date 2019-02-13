@@ -11,19 +11,19 @@ from .forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import AdmnoVerification
+
 
 
 class StudentDetail(generic.DetailView):
     model = Student
     template_name = 'ncas/studentdetails.html'
-    context_object_name = 'student'
+    context_object_name = 'studentd'
 
 
 class CourseList(generic.ListView):
     model = Course
     template_name = 'ncas/courselist.html'
-    context_object_name = 'course'
+    context_object_name = 'clist'
 
     def get_queryset(self):
         return Course.objects.all()
@@ -44,7 +44,7 @@ def signUp(request):
             p = sign.cleaned_data.get('password1')
             user = authenticate(username=u, password=p)
             login(request, user)
-            return redirect('ncas:std')
+            return redirect('ncas:home')
         else:
             return render(request, 'registration/signup.html', {'form': sign})
     else:
@@ -52,18 +52,15 @@ def signUp(request):
         return render(request, 'registration/signup.html', {'form': sign})
 
 
-'''class Admno(FormView):
-    template_name = 'registration/admno.html'
-    success_url = reverse_lazy('ncas:signup')
-    form_class = AdmnoVerification'''
 
 
-def admnoverification(request):
+
+'''def admnoverification(request):
     if request.method == "POST":
         admno = AdmnoVerification(request.POST)
-        adlist = Student.objects.all().values_list('adm_no', flat=True)
+
         if admno.is_valid():
-            a = admno.cleaned_data.get('adm_no')
+
             if a in adlist:
                 form = UserCreationForm()
                 return render(request, 'registration/signup.html', {'form': form})
@@ -73,4 +70,7 @@ def admnoverification(request):
             return render(request, 'registration/admno.html', {'form': admno})
     else:
         f = AdmnoVerification()
-        return render(request, 'registration/admno.html', {'form': f})
+        return render(request, 'registration/admno.html', {'form': f})'''
+
+def home(request):
+    return render(request, 'ncas/index.html')
