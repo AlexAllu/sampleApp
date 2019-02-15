@@ -5,11 +5,11 @@ from . import views
 
 app_name = 'ncas'
 urlpatterns = [
-
-    path('course/<int:pk>/', views.CourseDetail.as_view(), name='course'),
-    path('courselist/',views.CourseList.as_view(), name='clist'),
-    path('students/<int:pk>/', views.StudentDetail.as_view(), name='studentd'),
-    path('signup/', views.signUp, name='signup'),
-    path('admno/', views.admnoverification, name='admno'),
+    #path('home/',views, name='home'),
+    path('mark-create/<int:pk>', views.mark_create, name='markcreate'),
+    path('user-create/', views.user_create, name='usercreate'),
+    path('student-create/<int:pk>/', views.student_create, name='studentcreate'),
+    path('studentlist/', views.studentlist, name='studentlist'),
+    path('studentdetail/<int:pk>/', views.StudentDetail.as_view(), name='studentdetail'),
 
 ]

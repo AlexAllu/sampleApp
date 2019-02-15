@@ -1,19 +1,20 @@
 from django.contrib import admin
-from .models import Student, Course, Subject, Mark
+from .models import Student, Course, Subject, Mark, Tutor
 
 # Register your models here.
 # admin.site.register(Student)
 admin.site.register(Course)
 admin.site.register(Subject)
+#admin.site.register(Mark)
 
 
-# admin.site.register(Mark)
+# admin.site.register(Tutor)
+class StudentInline(admin.TabularInline):
+    model = Student
+    fields = ['name', 'adm_no', 'reg_no', 'course']
 
-class MarkInline(admin.TabularInline):
-    model = Mark
-    fields = ['sem', 'sub', 's_mark1', 's_mark2']
 
+@admin.register(Tutor)
+class BookAdmin(admin.ModelAdmin):
+    inlines = [StudentInline]
 
-@admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
-    inlines = [MarkInline]

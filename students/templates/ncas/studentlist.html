@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% extends 'base_generic.html' %}
+{% block content %}
+<h2>Your Students</h2>
+<ul>
+    {% for std in list %}
+    <li>
+        <a href="{% url 'ncas:studentdetail' std.pk %}">{{ std.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,9 +1,0 @@
-<!DOCTYPE html>
-{% extends 'base_generic.html' %}
-
-<ul>
-{% for c in course %}
-    <li><a href="{% url 'ncas:course' c.pk %}">{{ c.name }}</a></li>
-    {% endfor %}
-
-</ul>
