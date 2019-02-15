@@ -12,14 +12,17 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import StudentCreation, UserCreationForm, MarkCreation
+from django.contrib.auth.decorators import permission_required
 
 
+#@permission_required('auth.user.can_add_user', login_url=None)
 class StudentDetail(generic.DetailView):
     model = Student
     template_name = 'ncas/studentdetails.html'
     context_object_name = 'student'
 
 
+#@permission_required('auth.user.can_add_user', login_url=None)
 def user_create(request):
     if request.method == "POST":
         sign = UserCreationForm(request.POST)
@@ -36,12 +39,13 @@ def user_create(request):
         return render(request, 'ncas/signup.html', {'form': sign})
 
 
+#@permission_required('auth.user.can_add_user', login_url=None)
 def student_create(request, pk):
     if request.method == "POST":
         form = StudentCreation(request.POST)
         student = Student()
         student.details = User.objects.get(id=pk)
-        student.tutor = request.user.tutor       # User.objects.get(id=request.user.id)
+        student.tutor = request.user.tutor  # User.objects.get(id=request.user.id)
         if form.is_valid():
             student.name = form.cleaned_data['name']
             student.reg_no = form.cleaned_data['reg_no']
@@ -55,12 +59,13 @@ def student_create(request, pk):
         form = StudentCreation()
         return render(request, 'ncas/studen_create.html', {'form': form})
 
-
+#@permission_required('auth.user.can_add_user', login_url=None)
 def studentlist(request):
     li = request.user.tutor.student_set.all()
     return render(request, 'ncas/studentlist.html', {'list': li})
 
 
+#@permission_required('auth.user.can_add_user', login_url=None)
 def mark_create(request, pk):
     mark = Mark()
     ob = Student.objects.get(pk=pk)
@@ -83,3 +88,12 @@ def mark_create(request, pk):
         form = MarkCreation(list1=sub_list)
         return render(request, 'ncas/mark_create.html', {'form': form})
 
+
+def home(request):
+    return render(request, 'ncas/home.html')
+
+
+class StudentProfile(generic.DetailView):
+    model = Student
+    template_name = 'ncas/profiledetail.html'
+    context_object_name = 'student'

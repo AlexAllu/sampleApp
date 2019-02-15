@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends 'base_generic.html' %}
+{% block content %}
+<table class="table">
+<tr>
+    <td>Name</td>
+    <td>{{ student.name }}</td>
+</tr>
+<tr>
+    <td>Admission No:</td>
+    <td>{{ student.adm_no }}</td>
+</tr>
+    <tr>
+        <td>Register No</td>
+        <td>{{ student.reg_no }}</td>
+    </tr>
+<tr>
+    <td>Course</td>
+    <td>{{ student.course }}</td>
+</tr>
+    <tr>
+    <td>Tutor</td>
+    <td>{{ student.tutor }}</td>
+</tr>
+</table>
+<ul>
+    {% for mark in student.mark_set.all %}
+    <li>
+        {{ mark }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
