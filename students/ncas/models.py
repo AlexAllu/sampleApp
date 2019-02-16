@@ -52,8 +52,16 @@ class Mark(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
     student = models.ForeignKey(Student, verbose_name='Student', on_delete=models.CASCADE)
     sub = models.ForeignKey(Subject, verbose_name='Subject', on_delete=models.CASCADE)
-    s_mark1 = models.IntegerField('First Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)], null=True)
-    s_mark2 = models.IntegerField('Second Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)], null=True)
+    s_mark1 = models.IntegerField('First Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)],
+                                  null=True)
+    s_mark2 = models.IntegerField('Second Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)],
+                                  null=True)
 
     def __str__(self):
         return self.sub.name
+
+
+class Assignment(models.Model):
+    topic = models.CharField('Topic', max_length=1000)
+    dos = models.DateField()
+    sub = models.ForeignKey(Subject, verbose_name='Subject', on_delete=models.CASCADE)

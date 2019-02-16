@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% extends 'base_generic.html' %}
 {% block content %}
+{% load static %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
 <table class="table">
 <tr>
     <td>Name</td>
@@ -23,12 +25,34 @@
     <td>{{ student.tutor }}</td>
 </tr>
 </table>
-<ul>
-    {% for mark in student.mark_set.all %}
-    <li>
-        {{ mark }}
-    </li>
+<table class="table">
+    <tr>
+        <td>
+            SUBJECT
+        </td>
+        <td>
+            FIRST INTERNAL
+        </td>
+        <td>
+            SECOND INTERNAL
+        </td>
+    </tr>
+        {% for mark in student.mark_set.all %}
+            <td>
+                {{ mark }}
+            </td>
+
+        <td>
+            {{ mark.s_mark1 }}
+        </td>
+        <td>
+            {{ mark.s_mark2 }}
+        </td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+</div>
+{%if user.tutor %}
 <a class="btn btn-primary" href="{% url 'ncas:markcreate' student.pk %}">Add Mark</a>
+{% endif %}
 {% endblock %}
