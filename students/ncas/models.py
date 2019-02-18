@@ -3,6 +3,8 @@ import uuid as uuid
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MinValueValidator, MaxLengthValidator, MaxValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Course(models.Model):
@@ -53,9 +55,9 @@ class Mark(models.Model):
     student = models.ForeignKey(Student, verbose_name='Student', on_delete=models.CASCADE)
     sub = models.ForeignKey(Subject, verbose_name='Subject', on_delete=models.CASCADE)
     s_mark1 = models.IntegerField('First Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)],
-                                  null=True)
+                                  blank=True)
     s_mark2 = models.IntegerField('Second Internal mark', validators=[MaxValueValidator(50), MinValueValidator(0)],
-                                  null=True)
+                                  blank=True)
 
     def __str__(self):
         return self.sub.name
@@ -65,3 +67,15 @@ class Assignment(models.Model):
     topic = models.CharField('Topic', max_length=1000)
     dos = models.DateField()
     sub = models.ForeignKey(Subject, verbose_name='Subject', on_delete=models.CASCADE)
+
+
+@receiver(post_save, sender=Student, dispatch_uid="create marks")
+def update_stock(sender, instance, **kwargs):
+    lists = instance.course.subject_set.all()
+    for i in lists:
+        obj = Mark()
+        obj.student = instance
+        obj.sub = i
+        obj.s_mark1 = 0
+        obj.s_mark2 = 0
+        obj.save()
