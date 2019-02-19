@@ -1,3 +1,4 @@
+import datetime
 import uuid as uuid
 
 from django.contrib.auth.models import User
@@ -64,9 +65,20 @@ class Mark(models.Model):
 
 
 class Assignment(models.Model):
-    topic = models.CharField('Topic', max_length=1000)
-    dos = models.DateField()
-    sub = models.ForeignKey(Subject, verbose_name='Subject', on_delete=models.CASCADE)
+    topic = models.CharField('Topic', max_length=200)
+    descrip = models.TextField('Details', max_length=1000)
+    date_publish = models.DateField('Date of published', default=datetime.datetime.now())
+    sub = models.OneToOneField(Subject, verbose_name='Subject', on_delete=models.CASCADE)
+    last_date = models.DateField('Last date for submit')
+    tutor = models.OneToOneField(Tutor, on_delete=models.CASCADE, verbose_name='Tutor')
+    file = models.FileField(upload_to='/{}/{}/'.format(tutor.name, topic), null=True)
+
+
+class Notifications(models.Model):
+    topic = models.CharField('Topic', max_length=200)
+    date_of_published = models.DateField('Date of published', default=datetime.datetime.now())
+    descrip = models.TextField('Details', max_length=1000)
+    fileupload = models.FileField(upload_to='/notifications/', null=True)
 
 
 @receiver(post_save, sender=Student, dispatch_uid="create marks")

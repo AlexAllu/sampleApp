@@ -15,14 +15,13 @@ from .forms import StudentCreation, UserCreationForm, MarkCreation
 from django.contrib.auth.decorators import permission_required
 
 
-#@permission_required('auth.user.can_add_user', login_url=None)
 class StudentDetail(generic.DetailView):
     model = Student
     template_name = 'ncas/studentdetails.html'
     context_object_name = 'student'
 
 
-#@permission_required('auth.user.can_add_user', login_url=None)
+@permission_required('auth.add_user')
 def user_create(request):
     if request.method == "POST":
         sign = UserCreationForm(request.POST)
@@ -39,7 +38,7 @@ def user_create(request):
         return render(request, 'ncas/signup.html', {'form': sign})
 
 
-#@permission_required('auth.user.can_add_user', login_url=None)
+@permission_required('auth.add_user')
 def student_create(request, pk):
     if request.method == "POST":
         form = StudentCreation(request.POST)
@@ -59,13 +58,14 @@ def student_create(request, pk):
         form = StudentCreation()
         return render(request, 'ncas/studen_create.html', {'form': form})
 
-#@permission_required('auth.user.can_add_user', login_url=None)
+
+@permission_required('auth.add_user')
 def studentlist(request):
     li = request.user.tutor.student_set.all()
     return render(request, 'ncas/studentlist.html', {'list': li})
 
 
-#@permission_required('auth.user.can_add_user', login_url=None)
+@permission_required('auth.add_user')
 def mark_update(request, pk):
     mark = Mark()
     ob = Student.objects.get(pk=pk)
@@ -97,4 +97,3 @@ class StudentProfile(generic.DetailView):
     model = Student
     template_name = 'ncas/profiledetail.html'
     context_object_name = 'student'
-
