@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.views import generic
 from django.views.generic import FormView
@@ -67,26 +67,13 @@ def studentlist(request):
 
 @permission_required('auth.add_user')
 def mark_update(request, pk):
-    mark = Mark()
-    ob = Student.objects.get(pk=pk)
+    mark = get_object_or_404(Mark, uuid=pk)
 
-    mark.student = ob
-    sub_list = ob.course.subject_set.all()
-    if request.method == "POST":
-        form = MarkCreation(request.POST, list1=sub_list)
-        mark.details = ob
-        if form.is_valid():
-            mark.sub = form.cleaned_data['sub']
-            mark.sem = (form.cleaned_data['sub']).sem
-            mark.s_mark1 = form.cleaned_data['s_mark1']
-            mark.s_mark2 = form.cleaned_data['s_mark2']
-            mark.save()
-            return redirect('ncas:studentdetail', pk=pk)
-        else:
-            return render(request, 'ncas/mark_create.html', {'form': form})
-    else:
-        form = MarkCreation(list1=sub_list)
-        return render(request, 'ncas/mark_create.html', {'form': form})
+    form = MarkCreation(request.POST or None, instance=mark)
+    if form.is_valid():
+        form.save()
+        return redirect('ncas:studentdetail', pk=mark.student.pk)
+    return render(request, 'ncas/mark_create.html', {'form': form})
 
 
 def home(request):

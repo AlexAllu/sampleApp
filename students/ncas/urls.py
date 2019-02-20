@@ -6,7 +6,7 @@ from . import views
 app_name = 'ncas'
 urlpatterns = [
     path('home/', views.home, name='home'),
-    path('mark-create/<int:pk>', views.mark_update, name='markcreate'),
+    path('mark-create/<pk>', views.mark_update, name='markcreate'),
     path('user-create/', views.user_create, name='usercreate'),
     path('student-create/<int:pk>/', views.student_create, name='studentcreate'),
     path('studentlist/', views.studentlist, name='studentlist'),

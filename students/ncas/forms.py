@@ -26,12 +26,6 @@ class StudentCreation(forms.ModelForm):
 
 class MarkCreation(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        pk1 = kwargs.pop('list1')
-
-        super(MarkCreation, self).__init__(*args, **kwargs)
-        self.fields['sub'] = forms.ModelChoiceField(queryset=pk1)
-
     class Meta:
         model = Mark
-        fields = ('sub', 's_mark1', 's_mark2')
+        fields = ('s_mark1', 's_mark2')

@@ -25,34 +25,47 @@
     <td>{{ student.tutor }}</td>
 </tr>
 </table>
-<table class="table">
-    <tr>
-        <td>
-            SUBJECT
-        </td>
-        <td>
-            FIRST INTERNAL
-        </td>
-        <td>
-            SECOND INTERNAL
-        </td>
-    </tr>
-        {% for mark in student.mark_set.all %}
-            <td>
-                {{ mark }}
-            </td>
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>
+                    SEMESTER
+                </th>
+                <th>
+                    SUBJECT
+                </th>
+                <th>
+                    FIRST INTERNAL
+                </th>
+                <th>
+                    SECOND INTERNAL
+                </th>
+            </tr>
+                {% for mark in student.mark_set.all %}
+            <tr>
+                <td>
+                    {{ mark.sub.sem }}
+                </td>
+                <td>
+                    {{ mark }}
+                </td>
 
-        <td>
-            {{ mark.s_mark1 }}
-        </td>
-        <td>
-            {{ mark.s_mark2 }}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+                <td>
+                    {{ mark.s_mark1 }}
+                </td>
+                <td>
+                    {{ mark.s_mark2 }}
+                </td>
+                {% if perms.ncas.change_mark %}
+                <td>
+                    <a class="btn btn-primary" href="{% url 'ncas:markcreate' mark.pk %}">Add Mark</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
 </div>
-{%if user.tutor %}
-<a class="btn btn-primary" href="{% url 'ncas:markcreate' student.pk %}">Add Mark</a>
-{% endif %}
+
 {% endblock %}
