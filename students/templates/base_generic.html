@@ -12,34 +12,33 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">NCAS</a>
+      <a class="navbar-brand" href="{% url 'ncas:home' %}">NCAS</a>
     </div>
     {%if user.is_authenticated %}
     <ul class="nav navbar-nav">
       {% if perms.ncas.change_mark %}
-      <li><a href="{% url 'ncas:studentlist' %}">Students</a></li>
-      <li><a href="{% url 'ncas:usercreate' %}">Create Student</a></li>
-      <li><a href="">Add Assignment</a></li>
-      <li><a href="">Notifications</a></li>
+        <li><a href="{% url 'ncas:studentlist' %}">Students</a></li>
+        <li><a href="{% url 'ncas:usercreate' %}">Create Student</a></li>
+        <li><a href="">Add assignments</a></li>
       {% else %}
-      <li><a href="{% url 'ncas:studentdetail' pk=user.student.pk %}">Marks</a></li>
-      <li><a href="{% url 'ncas:usercreate' %}">Assignments</a></li>
-      <li><a href="">Notifications</a></li>
+        <li><a href="">Your marks</a></li>
+        <li><a href="">Assignments</a></li>
+
       {%endif%}
+      <li><a href="">Notifications</a></li>
     </ul>
     {%endif%}
     <ul class="nav navbar-nav navbar-right">
       {%if user.is_authenticated %}
-        {% if perms.ncas.change_mark %}
-         <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user.username}}</a></li>
-
+        {%if user.student %}
+         <li><a href="{% url 'ncas:studentdetail' pk=user.student.pk %}"><span class="glyphicon glyphicon-user"></span>{{user.username}}</a></li>
       {% else %}
-        <li><a href="{% url 'ncas:studentdetail' pk=user.student.pk %}"><span class="glyphicon glyphicon-user"></span>{{user.username}}</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user.username}}</a></li>
       {%endif%}
-        <li><a href="{% url 'logout' %}?next=/accounts/login"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+        <li><a href="{% url 'logout' %}?next={% url 'login' %}"> <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         {% else %}
 
-            <li><a href="{% url 'login' %}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="{% url 'login' %}?next={% url 'ncas:home' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             <!--<li><a href="{% url 'admin:index'%}"><span class="glyphicon glyphicon-user"></span>Admin LogIn</a></li>-->
         {%endif%}
     </ul>
